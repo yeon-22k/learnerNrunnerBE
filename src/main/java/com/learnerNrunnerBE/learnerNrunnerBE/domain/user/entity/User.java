@@ -1,4 +1,4 @@
-package com.learnerNrunnerBE.learnerNrunnerBE.user.entity;
+package com.learnerNrunnerBE.learnerNrunnerBE.domain.user.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

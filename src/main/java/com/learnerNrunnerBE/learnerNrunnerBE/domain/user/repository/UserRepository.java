@@ -1,6 +1,6 @@
-package com.learnerNrunnerBE.learnerNrunnerBE.user.repository;
+package com.learnerNrunnerBE.learnerNrunnerBE.domain.user.repository;
 
-import com.learnerNrunnerBE.learnerNrunnerBE.user.entity.User;
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

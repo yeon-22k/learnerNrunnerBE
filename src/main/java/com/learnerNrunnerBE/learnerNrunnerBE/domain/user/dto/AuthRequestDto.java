@@ -1,4 +1,4 @@
-package com.learnerNrunnerBE.learnerNrunnerBE.user.dto;
+package com.learnerNrunnerBE.learnerNrunnerBE.domain.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
