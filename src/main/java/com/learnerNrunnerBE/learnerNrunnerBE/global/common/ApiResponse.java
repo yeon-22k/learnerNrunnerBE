@@ -21,6 +21,10 @@ public class ApiResponse<T> {
         return new ApiResponse<>(successCode.getCode(), successCode.getMessage(), null);
     }
 
+    public static <T> ApiResponse<T> onFailure(ErrorResponseCode errorCode, T result) {
+        return new ApiResponse<>(errorCode.getCode(), errorCode.getMessage(), result);
+    }
+
     public static <T> ApiResponse<T> onFailure(ErrorResponseCode errorCode) {
         return new ApiResponse<>(errorCode.getCode(), errorCode.getMessage(), null);
     }
