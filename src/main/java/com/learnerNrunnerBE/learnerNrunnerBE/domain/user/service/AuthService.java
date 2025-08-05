@@ -1,10 +1,8 @@
 package com.learnerNrunnerBE.learnerNrunnerBE.domain.user.service;
 
-import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.repository.UserRepository;
-import org.springframework.stereotype.Service;
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.dto.ResisterRequestDto;
 
-@Service
-public class AuthService {
-    private final UserRepository userRepository;
+public interface AuthService {
+    void resister(ResisterRequestDto requestDto);
 
 }

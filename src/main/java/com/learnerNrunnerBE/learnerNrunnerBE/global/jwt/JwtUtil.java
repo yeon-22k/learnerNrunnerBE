@@ -63,6 +63,10 @@ public class JwtUtil implements InitializingBean {
         return createToken(authentication.getName(), "access", accessTokenExpirationTime, null);
     }
 
+    public String generateAccessToken(String email){ //회원가입 용
+        return createToken(email, "access", accessTokenExpirationTime, null);
+    }
+
     public String generateRefreshToken() {
         return createToken(null, "refresh", refreshTokenExpirationTime, null);
     }
