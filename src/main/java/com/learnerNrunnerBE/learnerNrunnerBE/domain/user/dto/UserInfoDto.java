@@ -6,14 +6,12 @@ import java.util.UUID;
 
 public class UserInfoDto {
     private UUID identifier;
-    private String email;
-    private String password;
-    private String name;
+    private String accessToken;
+    private String refreshToken;
 
-    public UserInfoDto(User user) {
+    public UserInfoDto(User user, String accessToken, String refreshToken) {
         this.identifier = user.getIdentifier();
-        this.email = user.getEmail();
-        this.password = user.getPassword();
-        this.name = user.getName();
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
     }
 }
