@@ -2,11 +2,11 @@ package com.learnerNrunnerBE.learnerNrunnerBE.domain.course.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
-import lombok.RequiredArgsConstructor;
+
+import java.util.ArrayList;
 
 @Entity
 @Builder
-@RequiredArgsConstructor
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,15 +27,15 @@ public class Course {
     private String tag;
 
     // indexdAt은 BaseTimeEntity의 updatedAt으로 대체 가능 > 생성하자
-
-    @OneToMany(mappedBy = "course")
-    private List<StudyRoom> studyRooms = new ArrayList<>();
-
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private List<Favorite> favorites = new ArrayList<>();
-
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private List<LearningHistory> learningHistories = new ArrayList<>();
+// ** 후에 추가
+//    @OneToMany(mappedBy = "course")
+//    private List<StudyRoom> studyRooms = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+//    private List<Favorite> favorites = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+//    private List<LearningHistory> learningHistories = new ArrayList<>();
 
     //아래는 효율적 ES위해 추가
     @Column(name = "image_url")

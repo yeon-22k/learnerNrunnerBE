@@ -14,3 +14,7 @@ jwt:
   access-token-expiration-time: 3600000
   refresh-token-expiration-time: 7200000
   secret: OgLhTLUSyQoDK2d691+W6j+lt1SdWJG4dvx2QAsGXcY=
+
+kmooc:
+  api:
+    serviceKey: ${KMOOC_API_KEY}

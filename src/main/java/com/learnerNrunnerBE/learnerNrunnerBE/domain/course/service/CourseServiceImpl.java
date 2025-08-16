@@ -5,6 +5,7 @@ import com.learnerNrunnerBE.learnerNrunnerBE.domain.course.dto.CourseListRespons
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.course.entity.Course;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.course.repository.CourseRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,16 +16,19 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class CourseServiceImpl {
+@RequiredArgsConstructor
+@Transactional
+public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final RestTemplate restTemplate;
 
     @Value("&{kmooc.api.serviceKey}")
     private String serviceKey;
-    private final String LIST_URL = "http://www.kmooc.kr/openapi/courseList";
-    private final String DETAIL_URL = "http://www.kmooc.kr/openapi/courseDetail";
+    private final String BASE_URL = "https://apis.data.go.kr/B552881/kmooc_v2_0";
+    private final String LIST_PATH = "/courseList";
+    private final String DETAIL_PATH = "/courseDetail";
 
-    @Transactional
+    @Override
     public int fetchAndSaveKmoocCourses() {
         if (courseRepository.count() > 0) {
             log.warn("DB에 이미 데이터가 존재하여 작업을 건너뜁니다.");
@@ -33,7 +37,7 @@ public class CourseServiceImpl {
 
         // 1. 강좌 목록 API 호출
         log.info("1단계: 강좌 목록 조회를 시작합니다...");
-        String listApiUrl = LIST_URL + "?ServiceKey=" + serviceKey;
+        String listApiUrl = BASE_URL + LIST_PATH + "?ServiceKey=" + serviceKey;
         CourseListResponseDto listResponse = restTemplate.getForObject(listApiUrl, CourseListResponseDto.class);
 
         if (listResponse == null || listResponse.getResult() == null) {
@@ -49,7 +53,7 @@ public class CourseServiceImpl {
         log.info("2단계: 각 강좌의 상세 정보 조회를 시작합니다...");
         List<Course> coursesToSave = new ArrayList<>();
         for (String courseId : courseIds) {
-            String detailApiUrl = DETAIL_URL + "?ServiceKey=" + serviceKey + "&CourseId=" + courseId;
+            String detailApiUrl = BASE_URL + DETAIL_PATH + "?ServiceKey=" + serviceKey + "&CourseId=" + courseId;
             try {
                 CourseDetailResponseDto detailResponse = restTemplate.getForObject(detailApiUrl, CourseDetailResponseDto.class);
                 if (detailResponse != null) {
