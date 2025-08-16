@@ -18,7 +18,7 @@ public class CourseController {
     @PostMapping("/fetch-courses")
     public ResponseEntity<ApiResponse<Void>> fetchCourses() {
         int savedCount = courseService.fetchAndSaveKmoocCourses();
-        log.atInfo().log("savedCount={}", savedCount);
+        log.info("savedCount={}", savedCount);
 
         return ResponseEntity.ok(ApiResponse.onSuccess(SuccessCode.OK));
     }

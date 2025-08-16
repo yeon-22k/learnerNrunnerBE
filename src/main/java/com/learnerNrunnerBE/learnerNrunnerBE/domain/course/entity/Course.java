@@ -2,11 +2,13 @@ package com.learnerNrunnerBE.learnerNrunnerBE.domain.course.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.util.ArrayList;
 
 @Entity
 @Builder
+@Getter
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,6 +4,7 @@ import com.learnerNrunnerBE.learnerNrunnerBE.domain.course.dto.CourseDetailRespo
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.course.dto.CourseListResponseDto;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.course.entity.Course;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.course.repository.CourseRepository;
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.elasticsearch.service.CourseSearchService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +22,13 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final RestTemplate restTemplate;
+    private final CourseSearchService courseSearchService;
 
     @Value("&{kmooc.api.serviceKey}")
     private String serviceKey;
     private final String BASE_URL = "https://apis.data.go.kr/B552881/kmooc_v2_0";
-    private final String LIST_PATH = "/courseList";
-    private final String DETAIL_PATH = "/courseDetail";
+    private final String LIST_PATH = "/courseList_v2_0";
+    private final String DETAIL_PATH = "/courseDetail_v2_0";
 
     @Override
     public int fetchAndSaveKmoocCourses() {
@@ -65,12 +67,19 @@ public class CourseServiceImpl implements CourseService {
             }
         }
 
+        if (coursesToSave.isEmpty()){
+            return 0; //**예외처리 해야함
+        }
+
         // 3. DB에 한번에 저장
         log.info("3단계: 조회된 {}개의 상세 정보를 DB에 저장합니다...", coursesToSave.size());
-        courseRepository.saveAll(coursesToSave);
+        List<Course> saveCourses = courseRepository.saveAll(coursesToSave);
         log.info("DB 저장 완료!");
 
-        return coursesToSave.size();
+        // 4. ElasticSearch 에 색인
+        courseSearchService.indexCourses(saveCourses);
+
+        return saveCourses.size();
     }
 
 }
