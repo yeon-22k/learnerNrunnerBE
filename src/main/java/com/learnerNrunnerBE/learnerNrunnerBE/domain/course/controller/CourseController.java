@@ -1,11 +1,13 @@
 package com.learnerNrunnerBE.learnerNrunnerBE.domain.course.controller;
 
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.course.service.CourseService;
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.elasticsearch.dto.CourseSearchResponseDto;
 import com.learnerNrunnerBE.learnerNrunnerBE.global.common.ApiResponse;
 import com.learnerNrunnerBE.learnerNrunnerBE.global.common.SuccessCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +23,11 @@ public class CourseController {
         log.info("savedCount={}", savedCount);
 
         return ResponseEntity.ok(ApiResponse.onSuccess(SuccessCode.OK));
+    }
+
+    @GetMapping("/main")
+    public ResponseEntity<ApiResponse<CourseSearchResponseDto>> getMainCourse() {
+
     }
 
 }
