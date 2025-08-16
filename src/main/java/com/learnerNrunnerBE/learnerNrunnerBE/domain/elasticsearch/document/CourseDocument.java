@@ -45,7 +45,7 @@ public class CourseDocument {
     @Field(type = FieldType.Keyword) // 추천 시스템의 핵심 필드
     private List<String> tags;
 
-    public static CourseDocument from(Course course) {
+    public static CourseDocument from(Course course) { //course 엔티티를 document로 변환하는 의미
         // category, provider, tag 필드를 합쳐서 tags 리스트 생성 ** 추후 고도화 필요
         List<String> combinedTags = Stream.of(course.getCategory(), course.getProvider(), course.getTag())
                 .filter(s -> s != null && !s.isBlank())
