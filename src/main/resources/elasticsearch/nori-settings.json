@@ -1,0 +1,9 @@
+{
+  "analysis": {
+    "analyzer": {
+      "nori-analyzer": {
+        "tokenizer": "nori-tokenizer"
+      }
+    }
+  }
+}
