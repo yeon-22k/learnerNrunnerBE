@@ -29,7 +29,8 @@ public class CourseServiceImpl implements CourseService {
     private final RestTemplate restTemplate;
     private final CourseSearchService courseSearchService;
     private final TagService tagService;
-    private final UserTagRepository userTagRepository;
+    private final UserTagRepository userTagRepository; // ** SRP 적용 가능 > service 층에 쿼리사용 메서드 아예 생성하는 식으로
+
 
     @Value("&{kmooc.api.serviceKey}")
     private String serviceKey;
@@ -39,11 +40,9 @@ public class CourseServiceImpl implements CourseService {
 
 
     public List<CourseSearchResponseDto> getHomeCourses(User user){
-        List<UserTag> userTags = userTagRepository.findAll();
+        List<UserTag> userTags = userTagRepository.findByUserWithTag(user);
 
-        courseSearchService.recommandByTags(userTags);
-
-        return null;
+        return courseSearchService.recommandByTags(userTags);
     }
 
     @Override
