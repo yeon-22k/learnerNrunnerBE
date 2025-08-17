@@ -1,1 +1,16 @@
-spring.application.name=learnerNrunnerBE
+spring:
+  application:
+      name: learnerNrunnerBE
+  datasource:
+    url: jdbc:mysql://localhost:3306/education_db?serverTimezone=Asia/Seoul
+    username: root
+    password: yourpassword
+    jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: true
+
+jwt:
+  access-token-expiration-time: 3600000
+  refresh-token-expiration-time: 7200000
+  secret: OgLhTLUSyQoDK2d691+W6j+lt1SdWJG4dvx2QAsGXcY=

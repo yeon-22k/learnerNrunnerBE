@@ -21,6 +21,7 @@ public class ApiResponse<T> {
         return new ApiResponse<>(successCode.getCode(), successCode.getMessage(), null);
     }
 
+    // valid 관련 exception 에서만 사용
     public static <T> ApiResponse<T> onFailure(ErrorResponseCode errorCode, T result) {
         return new ApiResponse<>(errorCode.getCode(), errorCode.getMessage(), result);
     }
