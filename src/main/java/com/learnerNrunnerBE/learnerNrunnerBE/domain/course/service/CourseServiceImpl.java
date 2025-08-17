@@ -4,7 +4,12 @@ import com.learnerNrunnerBE.learnerNrunnerBE.domain.course.dto.CourseDetailRespo
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.course.dto.CourseListResponseDto;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.course.entity.Course;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.course.repository.CourseRepository;
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.elasticsearch.dto.CourseSearchResponseDto;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.elasticsearch.service.CourseSearchService;
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.entity.User;
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.entity.UserTag;
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.repository.UserTagRepository;
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.service.UserTagService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,12 +28,23 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final RestTemplate restTemplate;
     private final CourseSearchService courseSearchService;
+    private final TagService tagService;
+    private final UserTagRepository userTagRepository;
 
     @Value("&{kmooc.api.serviceKey}")
     private String serviceKey;
     private final String BASE_URL = "https://apis.data.go.kr/B552881/kmooc_v2_0";
     private final String LIST_PATH = "/courseList_v2_0";
     private final String DETAIL_PATH = "/courseDetail_v2_0";
+
+
+    public List<CourseSearchResponseDto> getHomeCourses(User user){
+        List<UserTag> userTags = userTagRepository.findAll();
+
+//        courseSearchService.recommendByTags(userTags);
+//        > 이거 dto로 변환하고 반환
+        return null;
+    }
 
     @Override
     public int fetchAndSaveKmoocCourses() {
@@ -67,9 +83,19 @@ public class CourseServiceImpl implements CourseService {
             }
         }
 
-        if (coursesToSave.isEmpty()){
+        if (coursesToSave.isEmpty()) {
             return 0; //**예외처리 해야함
         }
+
+        //강의에 category와
+        coursesToSave.forEach(course -> {
+            if (course.getCategory() == null && !course.getCategory().isBlank()) {
+                tagService.findOrCraateTag(course.getCategory());
+            }
+            if (course.getTag() != null && !course.getTag().isBlank()) {
+                tagService.findOrCraateTag(course.getTag());
+            }
+        });
 
         // 3. DB에 한번에 저장
         log.info("3단계: 조회된 {}개의 상세 정보를 DB에 저장합니다...", coursesToSave.size());
@@ -81,5 +107,6 @@ public class CourseServiceImpl implements CourseService {
 
         return saveCourses.size();
     }
+
 
 }
