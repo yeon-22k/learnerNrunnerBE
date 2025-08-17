@@ -1,5 +1,6 @@
 package com.learnerNrunnerBE.learnerNrunnerBE.domain.elasticsearch.service;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.MultiMatchQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.course.entity.Course;
@@ -18,6 +19,7 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -58,10 +60,27 @@ public class CourseSearchServiceImpl implements CourseSearchService {
                 .collect(Collectors.toList());
     }
 
-//    public List<CourseSearchResponseDto> getHomeCourses(User user){
-//        Set<UserTag> tags = user.getTags();
-//
-//
-//    }
-//
+    @Override
+    public List<CourseSearchResponseDto> recommandByTags(List<UserTag> userTags){
+        if (userTags == null || userTags.isEmpty()){
+            return Collections.emptyList();
+        }
+
+        BoolQuery.Builder boolQueryBuilder = new BoolQuery.Builder();
+
+        for (UserTag tag : userTags){
+            String tagName = tag.getTag().getName();
+            boolQueryBuilder.should(s -> s
+                    .term(t -> t.field("tags").value(tagName))
+            );
+        }
+        Query query = Query.of(q -> q.bool(boolQueryBuilder.build()));
+        NativeQuery nativeQuery = NativeQuery.builder().withQuery(query).build();
+
+        SearchHits<CourseDocument> searchHits = elasticsearchOperations.search(nativeQuery, CourseDocument.class);
+
+        return searchHits.stream()
+                .map(hit -> CourseSearchResponseDto.from(hit.getContent()))
+                .collect(Collectors.toList());
+    }
 }

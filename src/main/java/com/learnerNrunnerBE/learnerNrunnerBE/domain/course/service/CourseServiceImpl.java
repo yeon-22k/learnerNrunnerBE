@@ -41,8 +41,8 @@ public class CourseServiceImpl implements CourseService {
     public List<CourseSearchResponseDto> getHomeCourses(User user){
         List<UserTag> userTags = userTagRepository.findAll();
 
-//        courseSearchService.recommendByTags(userTags);
-//        > 이거 dto로 변환하고 반환
+        courseSearchService.recommandByTags(userTags);
+
         return null;
     }
 
