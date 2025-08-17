@@ -2,6 +2,8 @@ package com.learnerNrunnerBE.learnerNrunnerBE.domain.elasticsearch.controller;
 
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.elasticsearch.dto.CourseSearchResponseDto;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.elasticsearch.service.CourseSearchService;
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.entity.User;
+import com.learnerNrunnerBE.learnerNrunnerBE.global.auth.CurrentUser;
 import com.learnerNrunnerBE.learnerNrunnerBE.global.common.ApiResponse;
 import com.learnerNrunnerBE.learnerNrunnerBE.global.common.SuccessCode;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +19,17 @@ import java.util.List;
 public class CourseSearchController {
     private final CourseSearchService courseSearchService;
 
+    @GetMapping("/main")
+    public ResponseEntity<ApiResponse<CourseSearchResponseDto>> getMainCourse(@CurrentUser User use) {
+        List<CourseSearchResponseDto> result = courseSearchService.getCources()
+
+    }
+
     @GetMapping("/search")
     public ResponseEntity<ApiResponse<List<CourseSearchResponseDto>>> searchCourses (@RequestParam String keyword) {
         List<CourseSearchResponseDto> result = courseSearchService.searchByKeyword(keyword);
         return ResponseEntity.ok(ApiResponse.onSuccess(SuccessCode.OK, result));
     }
+
 
 }

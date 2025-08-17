@@ -6,6 +6,11 @@ import com.learnerNrunnerBE.learnerNrunnerBE.domain.course.entity.Course;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.elasticsearch.document.CourseDocument;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.elasticsearch.dto.CourseSearchResponseDto;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.elasticsearch.repository.CourseSearchRepository;
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.entity.User;
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.entity.UserTag;
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.repository.UserRepository;
+import com.learnerNrunnerBE.learnerNrunnerBE.global.common.exception.CustomException;
+import com.learnerNrunnerBE.learnerNrunnerBE.global.util.CheckService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
@@ -14,6 +19,7 @@ import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -22,6 +28,7 @@ import java.util.stream.Collectors;
 public class CourseSearchServiceImpl implements CourseSearchService {
     private final CourseSearchRepository courseSearchRepository;
     private final ElasticsearchOperations elasticsearchOperations;
+    private final CheckService checkService;
 
     @Override
     public void indexCourses(List<Course> courses){
@@ -51,5 +58,10 @@ public class CourseSearchServiceImpl implements CourseSearchService {
                 .collect(Collectors.toList());
     }
 
-
+//    public List<CourseSearchResponseDto> getHomeCourses(User user){
+//        Set<UserTag> tags = user.getTags();
+//
+//
+//    }
+//
 }

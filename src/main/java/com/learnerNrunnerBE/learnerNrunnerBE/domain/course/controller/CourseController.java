@@ -2,6 +2,9 @@ package com.learnerNrunnerBE.learnerNrunnerBE.domain.course.controller;
 
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.course.service.CourseService;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.elasticsearch.dto.CourseSearchResponseDto;
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.elasticsearch.service.CourseSearchService;
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.entity.User;
+import com.learnerNrunnerBE.learnerNrunnerBE.global.auth.CurrentUser;
 import com.learnerNrunnerBE.learnerNrunnerBE.global.common.ApiResponse;
 import com.learnerNrunnerBE.learnerNrunnerBE.global.common.SuccessCode;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CourseController {
     private final CourseService courseService;
+    private final CourseSearchService courseSearchService;
 
     @PostMapping("/fetch-courses")
     public ResponseEntity<ApiResponse<Void>> fetchCourses() {
@@ -25,9 +29,5 @@ public class CourseController {
         return ResponseEntity.ok(ApiResponse.onSuccess(SuccessCode.OK));
     }
 
-    @GetMapping("/main")
-    public ResponseEntity<ApiResponse<CourseSearchResponseDto>> getMainCourse() {
-
-    }
 
 }

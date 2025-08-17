@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -27,6 +29,8 @@ public class User {
     private String password;
     private String name;
     private Long age;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UserTag> tags;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;

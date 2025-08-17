@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -36,8 +37,8 @@ public class Course {
 //    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
 //    private List<Favorite> favorites = new ArrayList<>();
 //
-//    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-//    private List<LearningHistory> learningHistories = new ArrayList<>();
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<LearningHistory> learningHistories;
 
     //아래는 효율적 ES위해 추가
     @Column(name = "image_url")
