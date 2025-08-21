@@ -38,7 +38,7 @@ public class CourseServiceImpl implements CourseService {
     private final String LIST_PATH = "/courseList_v2_0";
     private final String DETAIL_PATH = "/courseDetail_v2_0";
 
-
+    @Override
     public List<CourseSearchResponseDto> getHomeCourses(User user){
         List<UserTag> userTags = userTagRepository.findByUserWithTag(user);
 
