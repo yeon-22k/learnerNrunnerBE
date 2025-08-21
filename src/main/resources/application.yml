@@ -2,7 +2,7 @@ spring:
   application:
       name: learnerNrunnerBE
   datasource:
-    url: jdbc:mysql://localhost:3306/education_db?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/lnr?serverTimezone=Asia/Seoul
     username: root
     password: yourpassword
     jpa:

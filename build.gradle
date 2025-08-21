@@ -35,7 +35,7 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	// env 적용
-	implementation 'io.github.cdimascio:spring-boot-dotenv:2.3.0'
+	//implementation 'io.github.cdimascio:spring-boot-dotenv:2.3.0'
 
 	//ElasticSearch
 	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
