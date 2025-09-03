@@ -8,8 +8,8 @@ import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.entity.User;
 import java.util.List;
 
 public interface CommentService {
-    List<CommentResponseDto> getComments(Post post);
-    void createComment(CommentRequestDto dto, User user, Post post);
+    List<CommentResponseDto> getComments(Long postId);
+    void createComment(CommentRequestDto dto, User user, Long postId);
     //댓글 수정 불가
     void deleteComment(Long commentId);
 }

@@ -25,7 +25,8 @@ public class PostDetailResponseDto {
     @JsonProperty("user_id")
     private Long userId;
 
-    public static PostDetailResponseDto fromEntity(Post post, Long userId) {
+    public static PostDetailResponseDto fromEntity(Post post) {
+        Long userId = post.getUser().getId();
         return PostDetailResponseDto.builder()
                 .id(post.getId())
                 .title(post.getTitle())

@@ -1,5 +1,6 @@
 package com.learnerNrunnerBE.learnerNrunnerBE.domain.community.entity;
 
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.community.dto.PostRequestDto;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,4 +37,16 @@ public class Post {
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
+    public Post(PostRequestDto dto, User user){
+        this.title = dto.getTitle();
+        this.content = dto.getContent();
+        this.isStudy = dto.getIsStudy();
+        this.user = user;
+    }
+
+    public void updatePost(PostRequestDto dto){
+        this.title = dto.getTitle();
+        this.content = dto.getContent();
+        this.isStudy = dto.getIsStudy();
+    }
 }

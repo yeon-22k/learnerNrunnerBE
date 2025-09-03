@@ -5,8 +5,10 @@ import com.learnerNrunnerBE.learnerNrunnerBE.domain.community.entity.Comment;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.community.entity.Post;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.entity.User;
 import lombok.Builder;
+import lombok.Getter;
 
 @Builder
+@Getter
 public class CommentRequestDto {
     @JsonProperty("content")
     private String content;
@@ -16,14 +18,4 @@ public class CommentRequestDto {
 //
 //    @JsonProperty("post_id")
 //    private Long postId;
-
-    public Comment toEntity(User user, Post post){
-        return Comment.builder()
-                .content(this.content)
-                .user(user)
-                .post(post).build();
-    }
-
-
-
 }

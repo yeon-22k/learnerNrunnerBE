@@ -3,6 +3,7 @@ package com.learnerNrunnerBE.learnerNrunnerBE.domain.community.service;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.community.dto.PostRequestDto;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.community.dto.PostDetailResponseDto;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.community.dto.PostResponseDto;
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.community.entity.Post;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.community.repository.PostRepository;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.entity.User;
 import com.learnerNrunnerBE.learnerNrunnerBE.global.common.ErrorCode;
@@ -12,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+//todo : validation 체크
 
 @Service
 @RequiredArgsConstructor
@@ -43,17 +46,20 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void createPost(PostRequestDto postRequestDto){
-
+    public void createPost(PostRequestDto dto, User user){
+        Post post = new Post(dto, user);
+        postRepository.save(post);
     }
 
     @Override
-    public void updatePost(PostRequestDto postRequestDto){
-
+    public void updatePost(PostRequestDto dto, Long postId){
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new CustomException.NotFoundException(ErrorCode.NOT_FOUND));
+        post.updatePost(dto);
     }
 
     @Override
     public void deletePost(Long postId){
-
+        postRepository.deleteById(postId);
     }
 }

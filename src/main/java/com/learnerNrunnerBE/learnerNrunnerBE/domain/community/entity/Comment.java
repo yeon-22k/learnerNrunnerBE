@@ -1,5 +1,7 @@
 package com.learnerNrunnerBE.learnerNrunnerBE.domain.community.entity;
 
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.community.dto.CommentRequestDto;
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.community.dto.CommentResponseDto;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,4 +30,10 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
+
+    public Comment(CommentRequestDto dto, User user, Post post){
+        this.content = dto.getContent();
+        this.user = user;
+        this.post = post;
+    }
 }
