@@ -6,11 +6,12 @@ import com.learnerNrunnerBE.learnerNrunnerBE.domain.community.dto.PostResponseDt
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.entity.User;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface PostService {
     List<PostResponseDto> getAllPosts();
-    List<PostResponseDto> getPosts(User user);
-    PostDetailResponseDto getPost(Long postId);
+    List<PostResponseDto> getUserPosts(UUID identifier);
+    PostDetailResponseDto getPostDetail(Long postId);
     void createPost(PostRequestDto dto, User user);
     void updatePost(PostRequestDto dto, Long postId);
     void deletePost(Long postId);

@@ -6,6 +6,7 @@ import com.learnerNrunnerBE.learnerNrunnerBE.domain.community.dto.PostResponseDt
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.community.entity.Post;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.community.repository.PostRepository;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.entity.User;
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.repository.UserRepository;
 import com.learnerNrunnerBE.learnerNrunnerBE.global.common.ErrorCode;
 import com.learnerNrunnerBE.learnerNrunnerBE.global.common.exception.CustomException;
 import jakarta.transaction.Transactional;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 //todo : validation 체크
 
@@ -21,6 +23,7 @@ import java.util.List;
 @Transactional
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
     //메인화면 포스터 불러오기용
     @Override
@@ -32,14 +35,16 @@ public class PostServiceImpl implements PostService {
 
     //유저 포스터 검색용
     @Override
-    public List<PostResponseDto> getPosts(User user){
+    public List<PostResponseDto> getUserPosts(UUID identifier){
+        User user = userRepository.findByIdentifier(identifier)
+                .orElseThrow(() -> new CustomException.NotFoundException(ErrorCode.NOT_FOUND));
         return postRepository.findByUser(user).stream()
                 .map(PostResponseDto::fromEntity)
                 .toList();
     }
 
     @Override
-    public PostDetailResponseDto getPost(Long postId){
+    public PostDetailResponseDto getPostDetail(Long postId){
         return postRepository.findById(postId)
                 .map(PostDetailResponseDto::fromEntity)
                 .orElseThrow(() -> new CustomException.NotFoundException(ErrorCode.NOT_FOUND));
