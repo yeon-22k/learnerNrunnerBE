@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+//todo : column 들 이름 지정(모든 엔티티 대하여)
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,6 +25,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(columnDefinition = "BINARY(16)", nullable = false, unique = true)
     private UUID identifier;
     @Column(unique = true)
     private String email;

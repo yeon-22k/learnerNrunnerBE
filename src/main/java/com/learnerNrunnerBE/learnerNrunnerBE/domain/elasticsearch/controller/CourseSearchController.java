@@ -1,5 +1,6 @@
 package com.learnerNrunnerBE.learnerNrunnerBE.domain.elasticsearch.controller;
 
+import com.learnerNrunnerBE.learnerNrunnerBE.domain.course.service.CourseService;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.elasticsearch.dto.CourseSearchResponseDto;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.elasticsearch.service.CourseSearchService;
 import com.learnerNrunnerBE.learnerNrunnerBE.domain.user.entity.User;
@@ -18,11 +19,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CourseSearchController {
     private final CourseSearchService courseSearchService;
+    private final CourseService courseService;
 
     @GetMapping("/main")
-    public ResponseEntity<ApiResponse<CourseSearchResponseDto>> getMainCourse(@CurrentUser User use) {
-        List<CourseSearchResponseDto> result = courseSearchService.getCources()
-
+    public ResponseEntity<ApiResponse<List<CourseSearchResponseDto>>> getMainCourse(@CurrentUser User user) {
+        List<CourseSearchResponseDto> result = courseService.getHomeCourses(user);
+        return ResponseEntity.ok(ApiResponse.onSuccess(SuccessCode.OK, result));
     }
 
     @GetMapping("/search")
